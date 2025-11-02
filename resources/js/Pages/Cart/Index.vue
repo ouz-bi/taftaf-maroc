@@ -67,7 +67,7 @@ const total = computed(() => subtotal.value + deliveryFee)
                                     class="flex-shrink-0"
                                 >
                                     <img
-                                        :src="item.product.image || '/images/placeholder.png'"
+                                        :src="item.product.image ? `/storage/${item.product.image}` : '/images/placeholder.png'"
                                         :alt="item.product.name"
                                         class="w-24 h-24 object-cover rounded-lg"
                                     />

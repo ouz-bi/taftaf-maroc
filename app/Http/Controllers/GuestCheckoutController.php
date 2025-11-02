@@ -137,8 +137,14 @@ class GuestCheckoutController extends Controller
     public function track($orderNumber)
     {
         $order = Order::where('order_number', $orderNumber)
-            ->with(['items.product', 'rider.user'])
+            ->with(['items.product', 'rider.user', 'address'])
             ->firstOrFail();
+
+            // Calculer subtotal pour chaque item
+        $order->items->transform(function ($item) {
+            $item->subtotal = (float) $item->quantity * (float) $item->price;
+            return $item;
+        });
 
         return Inertia::render('GuestOrderTrack', [
             'order' => $order,

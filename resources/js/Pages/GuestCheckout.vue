@@ -364,7 +364,7 @@ const submit = () => {
                                         class="flex items-center space-x-3 pb-3 border-b"
                                     >
                                         <img
-                                            :src="item.product.image || '/images/placeholder.png'"
+                                            :src="item.product.image ? `/storage/${item.product.image}` : '/images/placeholder.png'"
                                             class="w-12 h-12 object-cover rounded"
                                         />
                                         <div class="flex-1 min-w-0">
