@@ -11,15 +11,18 @@ const props = defineProps({
 
 const searchQuery = ref('')
 const showCreateModal = ref(false)
+const selectedCategory = ref('')
 
 const search = () => {
     router.get('/admin/products', {
-        search: searchQuery.value
+        search: searchQuery.value,
+        category_id: selectedCategory.value,
     }, {
         preserveState: true,
         preserveScroll: true,
     })
 }
+
 
 const deleteProduct = (productId) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
@@ -62,6 +65,7 @@ const toggleAvailability = (productId, currentStatus) => {
                         <div class="relative">
                             <input
                                 v-model="searchQuery"
+                                @input="search"
                                 type="text"
                                 placeholder="Rechercher un produit..."
                                 class="input-field pl-10"
@@ -72,7 +76,7 @@ const toggleAvailability = (productId, currentStatus) => {
 
                     <!-- Category Filter -->
                     <div>
-                        <select class="input-field">
+                        <select v-model="selectedCategory" @change="search" class="input-field">
                             <option value="">Toutes les catégories</option>
                             <option
                                 v-for="category in categories"
